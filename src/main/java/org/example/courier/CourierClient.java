@@ -1,10 +1,14 @@
-package org.example.Courier;
+package org.example.courier;
+import io.qameta.allure.Step;
 import io.restassured.response.ValidatableResponse;
+import org.example.BaseApi;
 
 import static io.restassured.RestAssured.given;
+import static org.example.courier.Constants.*;
 
-public class CourierClient extends Constants {
-    public  ValidatableResponse createCourier(Courier courier){
+public class CourierClient extends BaseApi  {
+  @Step ("create courier")
+  public  ValidatableResponse create(Courier courier){
         return given()
                 .spec(getSpec())
                 .log().all()
@@ -14,7 +18,8 @@ public class CourierClient extends Constants {
                 .then()
                 .log().all();}
 
-    public  ValidatableResponse login(CourierCredentials courierCredentials) {
+   @Step ("login courier")
+   public  ValidatableResponse login(CourierCredentials courierCredentials) {
         return given()
                 .spec(getSpec())
                 .log().all()
@@ -24,7 +29,8 @@ public class CourierClient extends Constants {
                 .then()
                 .log().all();
     }
-    public ValidatableResponse deleteCourier(int idCourier) {
+   @Step ("delete courier")
+   public ValidatableResponse deleteCourier(int idCourier) {
         return given()
                 .spec(getSpec())
                 .when()

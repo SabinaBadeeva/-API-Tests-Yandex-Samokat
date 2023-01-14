@@ -2,14 +2,14 @@ import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.RestAssured;
 import io.restassured.response.ValidatableResponse;
-import org.example.Order.OrderClient;
+import org.example.order.OrderClient;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
 
 import static org.apache.http.HttpStatus.SC_OK;
-import static org.example.Courier.Constants.BASE_URL;
+import static org.example.courier.Constants.BASE_URL;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 

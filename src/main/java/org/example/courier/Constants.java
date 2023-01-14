@@ -1,4 +1,4 @@
-package org.example.Courier;
+package org.example.courier;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
@@ -11,12 +11,7 @@ public class Constants {
     public static final String DELETE_COURIER = "/api/v1/courier/";
 
 
-    protected RequestSpecification getSpec() {
-        return new RequestSpecBuilder()
-                .setContentType(ContentType.JSON)
-                .setBaseUri(BASE_URL)
-                .build();
-    }
+
 }
 
 

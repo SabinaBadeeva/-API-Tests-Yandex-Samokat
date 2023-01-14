@@ -2,15 +2,15 @@ import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.RestAssured;
 import io.restassured.response.ValidatableResponse;
-import org.example.Courier.Courier;
-import org.example.Courier.CourierClient;
-import org.example.Courier.CourierCredentials;
-import org.example.Courier.CourierGenerator;
+import org.example.courier.Courier;
+import org.example.courier.CourierClient;
+import org.example.courier.CourierCredentials;
+import org.example.courier.CourierGenerator;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.apache.http.HttpStatus.*;
-import static org.example.Courier.Constants.BASE_URL;
+import static org.example.courier.Constants.BASE_URL;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertEquals;
 

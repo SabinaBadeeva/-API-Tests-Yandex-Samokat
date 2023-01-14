@@ -2,17 +2,17 @@ import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.RestAssured;
 import io.restassured.response.ValidatableResponse;
-import org.example.Courier.Courier;
-import org.example.Courier.CourierClient;
-import org.example.Courier.CourierCredentials;
-import org.example.Courier.CourierGenerator;
+import org.example.courier.Courier;
+import org.example.courier.CourierClient;
+import org.example.courier.CourierCredentials;
+import org.example.courier.CourierGenerator;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.apache.http.HttpStatus.SC_BAD_REQUEST;
 import static org.apache.http.HttpStatus.SC_CONFLICT;
-import static org.example.Courier.Constants.BASE_URL;
+import static org.example.courier.Constants.BASE_URL;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
@@ -50,14 +50,13 @@ public class CreateCourierTest {
     @Description("успешный запрос возвращает ok: true")
     public void createCourierIsPossibleTest() {
         // создаем курьера
-        ValidatableResponse response = courierClient.createCourier(courier);
+        ValidatableResponse response = courierClient.create(courier);
         int statusCode = response.extract().statusCode();
-        assertThat("Некорректный код статуса", statusCode, equalTo(201));
+        assertThat("Курьер авторизовался", statusCode, equalTo(201));
         //успешный запрос возвращает ok: true
         response.assertThat().body("ok", equalTo(true));
         //получаем id курьера, который потом удаляется
-        ValidatableResponse login = courierClient.login(CourierCredentials.from(courier));
-        idCourier = login.extract().path("id");
+        int  idCourier = courierClient.loginUserGetID(CourierCredentials.from(courier));
         courierClient.deleteCourier(idCourier);
     }
 
@@ -65,8 +64,8 @@ public class CreateCourierTest {
     @DisplayName("Создать одинаковых курьеров")
     public void createCourierAlreadyUsedTest() {
         // создаем курьера
-        courierClient.createCourier(similarCourier);
-        ValidatableResponse response = courierClient.createCourier(similarCourier);
+        courierClient.create(similarCourier);
+        ValidatableResponse response = courierClient.create(similarCourier);
         //запрос возвращает код ответа
         int codeResponse = response.extract().statusCode();
         // проверяем статус код
@@ -74,8 +73,7 @@ public class CreateCourierTest {
         //"нельзя создать двух одинаковых курьеров"
         response.assertThat().body("message", notNullValue());
         //удаляем id
-        ValidatableResponse login = courierClient.login(CourierCredentials.from(similarCourier));
-        idCourier = login.extract().path("id");
+        int  idCourier = courierClient.loginUserGetID(CourierCredentials.from(similarCourier));
         courierClient.deleteCourier(idCourier);
 
 
@@ -85,11 +83,11 @@ public class CreateCourierTest {
     @Description("Eсли создать пользователя с логином, который уже есть, возвращается ошибка")
     public void createCourierWithDuplicatedLoginTest(){
         // создаем курьера
-        courierClient.createCourier(similarCourier);
+        courierClient.create(similarCourier);
         String firstLogin = similarCourier.getLogin();
         //создаем курьера с зарегистрированным логином
         someCourier.setLogin(firstLogin);
-        ValidatableResponse response = courierClient.createCourier(someCourier);
+        ValidatableResponse response = courierClient.create(someCourier);
         //запрос возвращает код ответа
         int codeResponse = response.extract().statusCode();
         // проверяем статус код
@@ -104,7 +102,7 @@ public class CreateCourierTest {
     @Description("Чтобы создать курьера, нужно передать в ручку все обязательные поля; если одного из полей нет, запрос возвращает ошибку;")
     public void createCourierWithoutLoginTest(){
         // создаем курьера без логина
-        ValidatableResponse response = courierClient.createCourier(courierWithoutLogin);
+        ValidatableResponse response = courierClient.create(courierWithoutLogin);
         //запрос возвращает код ответа
         int codeResponse = response.extract().statusCode();
         // проверяем статус код
@@ -118,7 +116,7 @@ public class CreateCourierTest {
     @Description("если одного из полей нет, запрос возвращает ошибку")
     public void createCourierWithoutPasswordTest(){
         // создаем курьера без пароля
-        ValidatableResponse response = courierClient.createCourier(courierWithoutPassword);
+        ValidatableResponse response = courierClient.create(courierWithoutPassword);
         //запрос возвращает код ответа
         int codeResponse = response.extract().statusCode();
         // проверяем статус код
