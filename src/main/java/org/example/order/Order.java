@@ -11,7 +11,8 @@ public class Order {
     private String comment;
     private String[] color;
 
-    public Order(String firstName, String lastName, String address, String metroStation, String phone, String rentTime, String deliveryDate, String comment, String[] color) {
+    public Order(String firstName, String lastName, String address, String metroStation, String phone, 
+                 String rentTime, String deliveryDate, String comment, String[] color) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
