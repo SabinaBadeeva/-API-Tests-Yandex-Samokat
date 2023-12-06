@@ -99,7 +99,8 @@ public class CreateCourierTest {
 
     @Test
     @DisplayName("Создать курьера без логина")
-    @Description("Чтобы создать курьера, нужно передать в ручку все обязательные поля; если одного из полей нет, запрос возвращает ошибку;")
+    @Description("Чтобы создать курьера, нужно передать в ручку все обязательные поля; 
+                 если одного из полей нет, запрос возвращает ошибку;")
     public void createCourierWithoutLoginTest(){
         // создаем курьера без логина
         ValidatableResponse response = courierClient.create(courierWithoutLogin);
