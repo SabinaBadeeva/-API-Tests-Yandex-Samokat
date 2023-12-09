@@ -50,7 +50,8 @@ public class LoginCourierTest {
 
     @Test
     @DisplayName("Авторизация несуществующего курьера")
-    @Description("Если авторизоваться под несуществующим пользователем, если неправильно указать логин или пароль, запрос возвращает ошибку")
+    @Description("Если авторизоваться под несуществующим пользователем, если неправильно указать логин или пароль, 
+                 запрос возвращает ошибку")
     public void loggedCourierNonExistentTest() {
         //аавторизация под несуществующими логином и паролем
         ValidatableResponse response = courierClient.login(CourierCredentials.from(courierNonExistent));
